@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<ResultSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="urn:yahoo:maps" xsi:schemaLocation="urn:yahoo:maps http://api.local.yahoo.com/MapsService/V1/GeocodeResponse.xsd">
+	<Result precision="address">
+		<Latitude>48.870480</Latitude>
+		<Longitude>2.305420</Longitude>
+		<Address>Avenue des Champs-Élysées</Address>
+		<City>Paris</City>
+		<State>France</State>
+		<Zip>75008</Zip>
+		<Country>FR</Country>
+	</Result>
+</ResultSet>
