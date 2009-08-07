@@ -53,6 +53,7 @@ This object is composed of the following methods :
 
   * `sfYahooGeocoderResponse geocode()` : calls the webservice and returns an instance of `sfYahooGeocoderResponse` class,
 
+
 All `setFooBar()` methods returns the current object, that allows to chain methods as it will be explained later.
 
 ### Usage examples ###
@@ -68,7 +69,6 @@ The simpliest usage example is given below :
       $geoResponse = $yahooGeocoder->setLocation('Champs Elysées, Paris, France')->geocode();
       
       echo $geoResponse->getLatitude();
-      echo '<br/>';
       echo $geoResponse->getLongitude();
     }
     catch (Exception $e)
@@ -76,7 +76,7 @@ The simpliest usage example is given below :
       throw new Exception('An error occured !');
     }
 
-As you can see, the API allows to chain methods to gain in readability. So, a more complex example might be the one below :
+As you can see, the API allows to chain methods to gain in readability. A more complex example might be the one below :
   
     <?php
     
@@ -92,7 +92,6 @@ As you can see, the API allows to chain methods to gain in readability. So, a mo
         geocode();
       
       echo $geoResponse->getLatitude();
-      echo '<br/>';
       echo $geoResponse->getLongitude();
     }
     catch (Exception $e)
@@ -248,11 +247,11 @@ The better way to do this is to use the `sfYahooGeocoder` object in the `save()`
 The plugin has been unit tested to provide a robust API :
 
  * run the tests:
-   ``
-     $ php plugins/sfYahooGeocoderPlugin/test/unit/geocoder/sfYahooGeocoderTest.php
-     $ php plugins/sfYahooGeocoderPlugin/test/unit/response/sfYahooGeocoderResponsePhpTest.php
-     $ php plugins/sfYahooGeocoderPlugin/test/unit/response/sfYahooGeocoderResponseXmlTest.php
-   ``
+
+    $ php plugins/sfYahooGeocoderPlugin/test/unit/geocoder/sfYahooGeocoderTest.php
+    $ php plugins/sfYahooGeocoderPlugin/test/unit/response/sfYahooGeocoderResponsePhpTest.php
+    $ php plugins/sfYahooGeocoderPlugin/test/unit/response/sfYahooGeocoderResponseXmlTest.php
+
 
 ## License and credits ##
 
