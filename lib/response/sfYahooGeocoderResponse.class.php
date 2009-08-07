@@ -13,7 +13,7 @@
  * The sfYahooGeocoderResponse provides method to get data returned by the webservice
  *
  * @package sfYahooGeocoderPlugin
- * @subpackage lib.geocoder
+ * @subpackage lib.response
  * @author Hugo Hamon <hugo.hamon@sensio.com>
  * @abstract
  *

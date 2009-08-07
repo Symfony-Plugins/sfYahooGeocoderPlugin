@@ -14,7 +14,7 @@
  * in abstract sfYahooGeocoderResponse class.
  *
  * @package sfYahooGeocoderPlugin
- * @subpackage lib.geocoder
+ * @subpackage lib.response
  * @author Hugo Hamon <hugo.hamon@sensio.com>
  *
  * @see http://www.symfony-project.org/plugins/sfYahooGeocoderPlugin
