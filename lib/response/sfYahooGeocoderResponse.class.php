@@ -59,7 +59,7 @@ abstract class sfYahooGeocoderResponse implements ArrayAccess
    */
   public function offsetGet($offset)
   {
-    if (!$this->getoffsetExists($offset))
+    if (!$this->offsetExists($offset))
     {
       throw new sfYahooGeocoderException(sprintf('Offset "%s" does not exist', $offset));
     }
