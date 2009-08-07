@@ -19,7 +19,7 @@
  *
  * @see http://www.symfony-project.org/plugins/sfYahooGeocoderPlugin
  */
-abstract class sfYahooGeocoderResponse
+abstract class sfYahooGeocoderResponse implements ArrayAccess
 {
   protected 
     $content,
@@ -38,6 +38,59 @@ abstract class sfYahooGeocoderResponse
    * @abstract
    */
   abstract protected function hydrate();
+
+  /**
+   * Checks if the offset exists in the array representation
+   *
+   * @see ArrayAccess
+   * @return boolean
+   */
+  public function offsetExists($offset)
+  {
+    return array_key_exists($offset, $this->_toArray());
+  }
+
+  /**
+   * Returns a value if it exists in the array representation
+   *
+   * @see ArrayAccess
+   * @return mixed
+   * @throws sfYahooGeocoderException
+   */
+  public function offsetGet($offset)
+  {
+    if (!$this->getoffsetExists($offset))
+    {
+      throw new sfYahooGeocoderException(sprintf('Offset "%s" does not exist', $offset));
+    }
+
+    $infos = $this->_toArray();
+
+    return $infos[$offset];
+  }
+
+  /**
+   * Sets a key / value pair in the array representation, throws an exception
+   *
+   * @param string $offset
+   * @param mixed $value
+   * @throws sfYahooGeocoderException
+   */
+  public function offsetSet($offset, $value)
+  {
+    throw new sfYahooGeocoderException('Setting values via ArrayAccess is not authorized');
+  }
+
+  /**
+   * Removes a value from the array representation, throws an exception
+   *
+   * @param string $offset
+   * @throws sfYahooGeocoderException
+   */
+  public function offsetUnset($offset)
+  {
+    throw new sfYahooGeocoderException('Removing values via ArrayAccess is not authorized')
+  }
 
   /**
    * Sets the HTTP response content
@@ -227,6 +280,19 @@ abstract class sfYahooGeocoderResponse
    * @return array
    */
   public function toArray()
+  {
+    return $this->_toArray();
+    
+  }
+
+  /**
+   * Returns the array representation of the object
+   *
+   * @return array
+   * @final
+   * @access protected
+   */
+  protected final function _toArray()
   {
     return array(
       'PrecisionLevel' => $this->getPrecisionLevel(),
