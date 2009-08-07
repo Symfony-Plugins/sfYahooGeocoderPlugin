@@ -286,6 +286,16 @@ abstract class sfYahooGeocoderResponse implements ArrayAccess
   }
 
   /**
+   * Returns wether or not latitude and longitude are set
+   *
+   * @return boolean
+   */
+  public function hasCoordinates()
+  {
+    return (is_double($this->getLatitude()) && is_double($this->getLongitude()));
+  }
+
+  /**
    * Returns the array representation of the object
    *
    * @return array
@@ -295,6 +305,7 @@ abstract class sfYahooGeocoderResponse implements ArrayAccess
   protected final function _toArray()
   {
     return array(
+      'Content'        => $this->getContent(),
       'PrecisionLevel' => $this->getPrecisionLevel(),
       'Latitude'       => $this->getLatitude(),
       'Longitude'      => $this->getLongitude(),

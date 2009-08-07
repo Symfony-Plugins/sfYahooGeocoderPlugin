@@ -5,11 +5,24 @@ require_once(dirname(__FILE__).'/../../../lib/exception/sfYahooGeocoderException
 require_once(dirname(__FILE__).'/../../../lib/response/sfYahooGeocoderResponse.class.php');
 require_once(dirname(__FILE__).'/../../../lib/response/sfYahooGeocoderResponsePhp.class.php');
 
-$response = new sfYahooGeocoderResponsePhp();
-
-$t = new lime_test(25, new lime_output_color());
+$t = new lime_test(29, new lime_output_color());
 
 $xml = file_get_contents(dirname(__FILE__).'/../../fixtures/sfYahooGeocoderResponsePhp.txt');
+
+$t->diag('->hasCoordinates()');
+
+$response = new sfYahooGeocoderResponsePhp();
+
+$t->isa_ok($response->hasCoordinates(), 'boolean', '->hasCoordinates() returns a boolean value');
+$t->is($response->hasCoordinates(), false, '->hasCoordinates() returns "false"');
+
+$response->setLatitude(30.23345);
+$t->is($response->hasCoordinates(), false, '->hasCoordinates() returns "false"');
+
+$response->setLongitude(-2.83517);
+$t->is($response->hasCoordinates(), true, '->hasCoordinates() returns "true"');
+
+$response = new sfYahooGeocoderResponsePhp();
 
 $t->diag('->getContent()');
 
