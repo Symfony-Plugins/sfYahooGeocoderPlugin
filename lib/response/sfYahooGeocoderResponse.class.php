@@ -89,7 +89,7 @@ abstract class sfYahooGeocoderResponse implements ArrayAccess
    */
   public function offsetUnset($offset)
   {
-    throw new sfYahooGeocoderException('Removing values via ArrayAccess is not authorized')
+    throw new sfYahooGeocoderException('Removing values via ArrayAccess is not authorized');
   }
 
   /**
