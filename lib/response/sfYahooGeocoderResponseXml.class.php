@@ -52,6 +52,7 @@ class sfYahooGeocoderResponseXml extends sfYahooGeocoderResponse
         throw new sfYahooGeocoderException('No result found on the Yahoo! Geocoder service');
       }
 
+      $this->setPrecisionLevel((string) $xml->Result['precision']);
       $this->setLatitude((double) $xml->Result->Latitude);
       $this->setLongitude((double) $xml->Result->Longitude);
       $this->setAddress((string) $xml->Result->Address);

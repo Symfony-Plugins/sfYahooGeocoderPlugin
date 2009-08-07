@@ -52,7 +52,7 @@ $t->diag('->getAddress()');
 $t->isa_ok($response->getAddress(), 'string', '->getAddress() returns a string value');
 $t->is($response->getAddress(), 'Avenue des Champs-Élysées', '->getAddress() returns "Avenue des Champs-Élysées"');
 
-$t->diag('->toArray()');
+$t->diag('->getPrecisionLevel()');
 
-$t->isa_ok($response->toArray(), 'array', '->toArray() returns an array value');
-$t->is(array_key_exists('ResultSet', $response->toArray()), true, '->toArray() has "ResultSet" key');
+$t->isa_ok($response->getPrecisionLevel(), 'string', '->getPrecisionLevel() returns a string value');
+$t->is($response->getPrecisionLevel(), 'address', '->getPrecisionLevel() returns "address"');

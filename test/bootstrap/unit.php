@@ -7,8 +7,12 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-
 $_test_dir = realpath(dirname(__FILE__).'/../../../../..');
+
+if (!file_exists($_test_dir.'/symfony'))
+{
+  throw new Exception('Unable to locate the symfony executable');
+}
 
 require_once(dirname(__FILE__).'/../../../../config/ProjectConfiguration.class.php');
 $configuration = new ProjectConfiguration(realpath($_test_dir.'/..'));

@@ -29,7 +29,8 @@ abstract class sfYahooGeocoderResponse
     $city,
     $state,
     $zip,
-    $country;
+    $country,
+    $precisionLevel;
 
   /**
    * Hydrates the object by parsing the HTTP response content
@@ -198,5 +199,44 @@ abstract class sfYahooGeocoderResponse
   public function getZip()
   {
     return $this->zip;
+  }
+
+  /**
+   * Sets the precision level
+   *
+   * @param string $precision
+   */
+  public function setPrecisionLevel($precision)
+  {
+    $this->precisionLevel = trim((string) $precision);
+  }
+
+  /**
+   * Returns the precision level
+   *
+   * @return string
+   */
+  public function getPrecisionLevel()
+  {
+    return $this->precisionLevel;
+  }
+
+  /**
+   * Returns the array representation of the object
+   *
+   * @return array
+   */
+  public function toArray()
+  {
+    return array(
+      'PrecisionLevel' => $this->getPrecisionLevel(),
+      'Latitude'       => $this->getLatitude(),
+      'Longitude'      => $this->getLongitude(),
+      'Address'        => $this->getAddress(),
+      'City'           => $this->getCity(),
+      'State'          => $this->getState(),
+      'Zip'            => $this->getZip(),
+      'Country'        => $this->getCountry()
+    );
   }
 }

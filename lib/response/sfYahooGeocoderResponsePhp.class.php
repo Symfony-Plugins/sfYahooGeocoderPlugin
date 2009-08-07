@@ -22,23 +22,13 @@
 class sfYahooGeocoderResponsePhp extends sfYahooGeocoderResponse
 {
   /**
-   * Returns the array representation of the object
-   *
-   * @return array
-   */
-  public function toArray()
-  {
-    return unserialize($this->getContent());
-  }
-
-  /**
    * Hydrates the object from the http response content
    *
    * @throws sfYahooGeocoderException
    */
   protected function hydrate()
   {
-    $result = $this->toArray();
+    $result = unserialize($this->getContent());
 
     if (!count($result) || !isset($result['ResultSet']['Result']))
     {
@@ -46,7 +36,8 @@ class sfYahooGeocoderResponsePhp extends sfYahooGeocoderResponse
     }
 
     $result = $result['ResultSet']['Result'];
-    
+
+    $this->setPrecisionLevel((string) $result['precision']);
     $this->setLatitude((double) $result['Latitude']);
     $this->setLongitude((double) $result['Longitude']);
     $this->setAddress((string) $result['Address']);

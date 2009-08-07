@@ -9,7 +9,7 @@ try
 {
   $response = new sfYahooGeocoderResponseXml();
   
-  $t = new lime_test(15, new lime_output_color());
+  $t = new lime_test(17, new lime_output_color());
 }
 catch (Exception $e)
 {
@@ -60,3 +60,8 @@ $t->diag('->getAddress()');
 
 $t->isa_ok($response->getAddress(), 'string', '->getAddress() returns a string value');
 $t->is($response->getAddress(), 'Avenue des Champs-Élysées', '->getAddress() returns "Avenue des Champs-Élysées"');
+
+$t->diag('->getPrecisionLevel()');
+
+$t->isa_ok($response->getPrecisionLevel(), 'string', '->getPrecisionLevel() returns a string value');
+$t->is($response->getPrecisionLevel(), 'address', '->getPrecisionLevel() returns "address"');
