@@ -12,8 +12,8 @@
   </lead>
   <date>2009-08-11</date>
   <version>
-    <release>1.1.0</release>
-    <api>1.1.0</api>
+    <release>1.2.0</release>
+    <api>1.2.0</api>
   </version>
   <stability>
     <release>stable</release>
@@ -79,13 +79,6 @@
         <min>1.4.1</min>
       </pearinstaller>
       <package>
-	      <name>symfony</name>
-	      <channel>pear.symfony-project.com</channel>
-        <min>1.1.0</min>
-        <max>1.2.0</max>
-        <exclude>1.2.0</exclude>
-      </package> 
-      <package>
         <name>symfony</name>
         <channel>pear.symfony-project.com</channel>
         <min>1.2.0</min>
@@ -100,6 +93,22 @@
 
   <changelog>
    	<release>
+	    <version>
+	      <release>1.2.0</release>
+	      <api>1.2.0</api>
+	    </version>
+	    <stability>
+	      <release>stable</release>
+	      <api>stable</api>
+	    </stability>
+	    <license uri="http://www.symfony-project.com/license">MIT license</license>
+	    <date>2009-08-11</date>
+	    <license>MIT</license>
+	    <notes>
+		    * hugo.hamon: switched to version 1.2.0.
+	    </notes>
+	  </release>
+    <release>
 	    <version>
 	      <release>1.1.0</release>
 	      <api>1.1.0</api>
