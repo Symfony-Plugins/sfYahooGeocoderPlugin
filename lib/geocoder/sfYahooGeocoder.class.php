@@ -37,6 +37,13 @@ class sfYahooGeocoder
   );
 
   /**
+   * Returns the raw http response as a string
+   *
+   * @var string
+   */
+  protected $rawResponse = '';
+
+  /**
    * Array of query string parameters to send to the webservice
    *
    * @var array
@@ -91,6 +98,16 @@ class sfYahooGeocoder
     }
 
     return $default;
+  }
+
+  /**
+   * Returns the raw response
+   *
+   * @return string
+   */
+  public function getRawResponse()
+  {
+    return $this->rawResponse;
   }
 
   /**
@@ -294,7 +311,11 @@ class sfYahooGeocoder
 
       $this->httpAdapter->setParameters($this->parameters);
 
-      return $this->httpAdapter->handle();
+      $collection = $this->httpAdapter->handle();
+      
+      $this->rawResponse = $this->httpAdapter->getContent();
+
+      return $collection;
     }
     catch (Exception $e)
     {
