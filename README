@@ -1,12 +1,12 @@
 # sfYahooGeocoderPlugin #
 
 ## Introduction ##
-This plugin provides an easy way to use the Yahoo! Maps Geocoding service that allows to retrieve geographical informations according to an address, zip code, state or country. This service is provided by 
+This plugin provides an easy way to call the Yahoo! Maps Geocoding service in order to retrieve geographical data according to an address, zip code, state or country. This service is provided by 
 Yahoo! and returns, in php or xml formats, latitude and longitude of a geographical place in the world.
 
 The sfYahooGeocoderPlugin abstracts the Yahoo! API thanks to a clear, simple and flexible PHP API.
 
-Note that you will suscribe to the service to obtain your own Yahoo! API Key.
+Note that you will have to suscribe to the service to obtain your own Yahoo! API Key.
 
 ## Features ##
 
@@ -41,6 +41,7 @@ This object is composed of the following methods :
   * `string getState()`    : returns the `state` parameter,
   * `string getLocation()` : returns the `location` parameter,
   * `string getOutput()`   : returns the `output` parameter,
+  * `string getRawResponse()`   : returns the raw http response (as php or xml),
   * `sfYahooAdapterHttp getHttpAdapter()` : returns the current http adapter,
 
   * `setHttpAdapter(sfYahooAdapterHttp $httpAdapter)` : changes the http adapter which calls the webservice,
@@ -51,7 +52,7 @@ This object is composed of the following methods :
   * `setLocation(string $location)` : sets a location string, for example : `Champs Elysées, Paris, France`,
   * `setOutput(string $output)` : sets the Yahoo! expected response output, `xml` or `php`,
 
-  * `sfYahooGeocoderResponse geocode()` : calls the webservice and returns an instance of `sfYahooGeocoderResponse` class,
+  * `sfYahooGeocoderResponseCollection geocode()` : calls the webservice and returns an instance of `sfYahooGeocoderResponseCollection` class, which contains one or more `sfYahooGeocoderResponse` objects,
 
 
 All `setFooBar()` methods returns the current object, that allows to chain methods as it will be explained later.
@@ -99,11 +100,26 @@ As you can see, the API allows to chain methods to gain in readability. A more c
       throw new Exception('An error occured !');
     }
     
-The `geocode()` method returns an object containing geographical data. The API is described in the following chapter.
+The `geocode()` method returns an object containing a collection of objects representing geographical data. The API is described in the following chapter.
+
+### The `sfYahooGeocoderResponseCollection` API ###
+
+The `geocode()` method returns a `sfYahooGeocoderResponseCollection` object, which contains a collection of `sfYahooGeocoderResponsePhp` or `sfYahooGeocoderResponseXml` objects. Below is the API of this object.
+
+  * `mixed __call()` : call an accessor method of the current `sfYahooGeocoderResponse` object of the collection,
+  * `int count()` : returns the number of `sfYahooGeocoderResponse` objects in the collection,
+  * `sfYahooGeocoderResponse getByIndex($index)` : returns a `sfYahooGeocoderResponse` object located at position `$index`,
+  * `boolean isEmpty()` : returns wether or not the collection is empty,
+  * `array toArray()` : returns the array representation of the collection,
+  * `sfYahooGeocoderResponse getFirst()` : returns the first object of the collection,
+  * `sfYahooGeocoderResponse getLast()` : returns the last object of the collection,
+  * `boolean clear()` : empties the collection,
+  * `array getObjects()` : returns all the collection's objects in an array,
+
 
 ### The `sfYahooGeocoderResponse` API ###
 
-The `geocode()` method can return a `sfYahooGeocoderResponsePhp` or `sfYahooGeocoderResponseXml` object according to the `output` parameter. Both objects share the same API located in the abstract `sfYahooGeocoderResponse` class. 
+The API of derived `sfYahooGeocoderResponse` objects is described below. 
 
 The response API is described below :
   
@@ -119,7 +135,9 @@ The response API is described below :
   * `string getPrecisionLevel()` : returns the precision level,
   * `string getContent()` : returns the raw response from the Yahoo! webservice,
 
+
 ### ArrayAccess implementation for response objects ###
+
 
 The `sfYahooGeocoderResponse` class implements the `ArrayAccess` interface of the PHP SPL. So, every information accessible by an explicit accessor can be accessible via an array access interface :
   
@@ -151,7 +169,9 @@ The `sfYahooGeocoderResponse` class implements the `ArrayAccess` interface of th
       throw new Exception('An error occured !');
     }
 
+
 ### The HTTP adapter ###
+
 
 The GET request is managed through an HTTP adapter, which allows to call the webservice and gets the string response. The plugin is bundled with 2 http adapters :
   
@@ -179,7 +199,9 @@ Suppose that the `stream_context_create()` function is not installed on the php 
       throw new Exception('An error occured !');
     }
 
+
 ### Create your own HTTP Adapter ###
+
 
 If you need to use a different way to call the webservice, you can create your own HTTP Adapter class that inherits from the abstract `sfYahooAdapterHttp` class. You will have to implement the abstract protected `doSend()` method that makes the call to the webservice and returns the string response :
   
@@ -197,7 +219,9 @@ If you need to use a different way to call the webservice, you can create your o
       }
     }
 
+
 ## Concret example of usage ##
+
 
 Suppose we are managing a contacts list. Each contact has its personal address (street, state, zip code, city) and we want to locate it on a Yahoo! Maps. So, we need the contact's location to avoid to call the Yahoo! service every time we need to point his address on a map. The aim is to save the `latitude` and `longitude` value in the user table.
 
@@ -229,7 +253,7 @@ The better way to do this is to use the `sfYahooGeocoder` object in the `save()`
             setStreet($this->getStreet())->
             geocode();
           
-          if ($geoResponse->hasCoordinates())
+          if (!$geoResponse->isEmpty())
           {
             $this->setLatitude($geoResponse->getLatitude());
             $this->setLongitude($geoResponse->getLongitude());
@@ -249,11 +273,18 @@ The plugin has been unit tested to provide a robust API :
  * run the tests:
 
     $ php plugins/sfYahooGeocoderPlugin/test/unit/geocoder/sfYahooGeocoderTest.php
+    
+    $ php plugins/sfYahooGeocoderPlugin/test/unit/parser/sfYahooGeocoderParserPhpTest.php
+    
+    $ php plugins/sfYahooGeocoderPlugin/test/unit/parser/sfYahooGeocoderParserXmlTest.php
+    
     $ php plugins/sfYahooGeocoderPlugin/test/unit/response/sfYahooGeocoderResponsePhpTest.php
+    
     $ php plugins/sfYahooGeocoderPlugin/test/unit/response/sfYahooGeocoderResponseXmlTest.php
+
+    $ php plugins/sfYahooGeocoderPlugin/test/unit/response/sfYahooGeocoderResponseCollectionTest.php
 
 
 ## License and credits ##
 
 See `LICENSE` file.
-
