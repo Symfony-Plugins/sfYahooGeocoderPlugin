@@ -37,33 +37,50 @@ class sfYahooGeocoderResponseXml extends sfYahooGeocoderResponse
   }
 
   /**
-   * Hydrates the object from the http response content
+   * Hydrates the object from a SimpleXmlElement object
    *
    * @throws sfYahooGeocoderException
    */
-  protected function hydrate()
+  public function hydrateFromSimpleXmlElement(SimpleXmlElement $xml)
   {
-    try
+    if (isset($xml['precision']))
     {
-      $xml = new SimpleXMLElement($this->getContent());
-
-      if (!isset($xml->Result))
-      {
-        throw new sfYahooGeocoderException('No result found on the Yahoo! Geocoder service');
-      }
-
-      $this->setPrecisionLevel((string) $xml->Result['precision']);
-      $this->setLatitude((double) $xml->Result->Latitude);
-      $this->setLongitude((double) $xml->Result->Longitude);
-      $this->setAddress((string) $xml->Result->Address);
-      $this->setCity((string) $xml->Result->City);
-      $this->setState((string) $xml->Result->State);
-      $this->setZip((string) $xml->Result->Zip);
-      $this->setCountry((string) $xml->Result->Country);
+      $this->setPrecisionLevel($xml['precision']);  
     }
-    catch (Exception $e)
+
+    if (isset($xml->Latitude))
     {
-      throw new sfYahooGeocoderException('Invalid XML response');
+      $this->setLatitude($xml->Latitude);
+    }
+
+    if (isset($xml->Longitude))
+    {
+      $this->setLongitude($xml->Longitude);
+    }
+
+    if (isset($xml->Address))
+    {
+      $this->setAddress($xml->Address);
+    }
+
+    if (isset($xml->City))
+    {
+      $this->setCity($xml->City);
+    }
+
+    if (isset($xml->State))
+    {
+      $this->setState($xml->State);
+    }
+
+    if (isset($xml->Zip))
+    {
+      $this->setZip($xml->Zip);
+    }
+
+    if (isset($xml->Country))
+    {
+      $this->setCountry($xml->Country); 
     }
   }
 }
