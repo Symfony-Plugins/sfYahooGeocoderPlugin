@@ -3,8 +3,15 @@
 require dirname(__FILE__).'/../../bootstrap/unit.php';
 require_once(dirname(__FILE__).'/../../../lib/exception/sfYahooGeocoderException.class.php');
 require dirname(__FILE__).'/../../../lib/geocoder/sfYahooGeocoder.class.php';
+require dirname(__FILE__).'/../../../lib/adapter/sfYahooAdapterHttp.class.php';
+require dirname(__FILE__).'/../../../lib/adapter/sfYahooAdapterHttpMock.class.php';
+require dirname(__FILE__).'/../../../lib/parser/sfYahooGeocoderParser.class.php';
+require dirname(__FILE__).'/../../../lib/parser/sfYahooGeocoderParserPhp.class.php';
+require dirname(__FILE__).'/../../../lib/response/sfYahooGeocoderResponse.class.php';
+require dirname(__FILE__).'/../../../lib/response/sfYahooGeocoderResponsePhp.class.php';
+require dirname(__FILE__).'/../../../lib/response/sfYahooGeocoderResponseCollection.class.php';
 
-$t = new lime_test(22, new lime_output_color());
+$t = new lime_test(26, new lime_output_color());
 
 $t->diag('->getApiKey');
 
@@ -142,3 +149,15 @@ $t->diag('->getOutput()');
 $yahooGeocoder = new sfYahooGeocoder('API_KEY');
 $t->isa_ok($yahooGeocoder->setOutput('xml'), 'sfYahooGeocoder', '->setOutput() returns the sfYahooGeocoder instance');
 $t->is($yahooGeocoder->getOutput(), 'xml', '->getOutput() returns the output');
+
+$t->diag('->geocode()');
+
+$yahooGeocoder = new sfYahooGeocoder('API_KEY');
+$yahooGeocoder->setHttpAdapter(new sfYahooAdapterHttpMock());
+
+$t->isa_ok($yahooGeocoder->geocode(), 'sfYahooGeocoderResponseCollection', '->geocode() returns the sfYahooGeocoderResponseCollection instance');
+$t->is(count($yahooGeocoder->geocode()), 4, '->geocode() returns a collection with 4 elements');
+
+$t->diag('->getRawResponse()');
+$t->isa_ok($yahooGeocoder->getRawResponse(), 'string', '->getRawResponse() returns a string value');
+$t->is($yahooGeocoder->getRawResponse(), file_get_contents(dirname(__FILE__).'/../../fixtures/sfYahooGeocoderResponseCollectionPhp.txt'), '->getRawResponse() returns the raw response content');
