@@ -1,136 +1,127 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <package packagerversion="1.4.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
- <name>sfYahooGeocoderPlugin</name>
- <channel>plugins.symfony-project.org</channel>
- <summary>Abstracts the Yahoo! Maps Geocoding webservice API.</summary>
- <description>This plugin provides an easy way to use the Yahoo! Maps Geocoding service that allows to retrieve geographical informations according to an address, zip code, state or country.</description>
- <lead>
-  <name>Hugo Hamon</name>
-  <user>hugo.hamon</user>
-  <email>hugo.hamon@sensio.com</email>
-  <active>yes</active>
- </lead>
- <date>2009-08-07</date>
- <version>
-   <release>1.1.0</release>
-   <api>1.1.0</api>
- </version>
- <stability>
-  <release>stable</release>
-  <api>stable</api>
- </stability>
- <license uri="http://www.symfony-project.com/license">MIT license</license>
- <notes>-</notes>
- <contents>
-   <dir name="/">
-     <file role="data" name="README" />
-     <file role="data" name="LICENSE" />
+  <name>sfYahooGeocoderPlugin</name>
+  <channel>plugins.symfony-project.org</channel>
+  <summary>Abstracts the Yahoo! Maps Geocoding webservice API.</summary>
+  <description>This plugin provides an easy way to use the Yahoo! Maps Geocoding service that allows to retrieve geographical informations according to an address, zip code, state or country.</description>
+  <lead>
+    <name>Hugo Hamon</name>
+    <user>hugo.hamon</user>
+    <email>hugo.hamon@sensio.com</email>
+    <active>yes</active>
+  </lead>
+  <date>2009-08-11</date>
+  <version>
+    <release>1.1.0</release>
+    <api>1.1.0</api>
+  </version>
+  <stability>
+    <release>stable</release>
+    <api>stable</api>
+  </stability>
+  <license uri="http://www.symfony-project.com/license">MIT license</license>
+  <notes>-</notes>
+  <contents>
+    <dir name="/">
+      <file role="data" name="README" />
+      <file role="data" name="LICENSE" />
+      <dir name="data">
+        <dir name="xsd">
+          <!-- xsd -->
+          <file role="data" name="GeocodeResponse.xsd" />
+        </dir>
+      </dir>
+      <dir name="lib">
+        <dir name="adapter">
+          <file role="data" name="sfYahooAdapterHttp.class.php" />
+          <file role="data" name="sfYahooAdapterHttpCurl.class.php" />
+          <file role="data" name="sfYahooAdapterHttpStream.class.php" />
+        </dir>
+        <dir name="exception">
+          <file role="data" name="sfYahooGeocoderException.class.php" />
+        </dir>
+        <dir name="geocoder">
+	        <file role="data" name="sfYahooGeocoder.class.php" />
+        </dir>
+        <dir name="response">
+          <file role="data" name="sfYahooGeocoderResponse.class.php" />
+          <file role="data" name="sfYahooGeocoderResponsePhp.class.php" />
+          <file role="data" name="sfYahooGeocoderResponseXml.class.php" />
+        </dir>
+      </dir>
+      <dir name="test">
+        <dir name="bootstrap">
+          <file role="data" name="unit.php" />
+        </dir>
+        <dir name="fixtures">
+          <file role="data" name="sfYahooGeocoderResponsePhp.txt" />
+          <file role="data" name="sfYahooGeocoderResponseXml.xml" />
+        </dir>
+        <dir name="unit">
+	        <dir name="geocoder">
+            <file role="data" name="sfYahooGeocoderTest.php" />
+          </dir>
+          <dir name="response">
+            <file role="data" name="sfYahooGeocoderResponsePhpTest.php" />
+            <file role="data" name="sfYahooGeocoderResponseXmlTest.php" />
+          </dir>
+        </dir>
+      </dir>
+    </dir>
+  </contents>
 
-     <dir name="data">
-       <dir name="xsd">
-         <!-- xsd -->
-         <file role="data" name="GeocodeResponse.xsd" />
-       </dir>
-     </dir>
+  <dependencies>
+	  <required>
+		  <php>
+			  <min>5.1.0</min>
+      </php>
+      <pearinstaller>
+        <min>1.4.1</min>
+      </pearinstaller>
+      <package>
+	      <name>symfony</name>
+	      <channel>pear.symfony-project.com</channel>
+        <min>1.1.0</min>
+        <max>1.2.0</max>
+        <exclude>1.2.0</exclude>
+      </package> 
+      <package>
+        <name>symfony</name>
+        <channel>pear.symfony-project.com</channel>
+        <min>1.2.0</min>
+        <max>1.3.0</max>
+        <exclude>1.3.0</exclude>
+      </package>
+    </required>
+  </dependencies>
 
-     <dir name="lib">
-       <dir name="adapter">
-         <file role="data" name="sfYahooAdapterHttp.class.php" />
-         <file role="data" name="sfYahooAdapterHttpCurl.class.php" />
-         <file role="data" name="sfYahooAdapterHttpStream.class.php" />
-       </dir>
-
-       <dir name="exception">
-        <file role="data" name="sfYahooGeocoderException.class.php" />
-       </dir>
-
-       <dir name="geocoder">
-	       <file role="data" name="sfYahooGeocoder.class.php" />
-       </dir>
-
-       <dir name="response">
-         <file role="data" name="sfYahooGeocoderResponse.class.php" />
-         <file role="data" name="sfYahooGeocoderResponsePhp.class.php" />
-         <file role="data" name="sfYahooGeocoderResponseXml.class.php" />
-       </dir>
-     </dir>
-
-     <dir name="test">
-       <dir name="bootstrap">
-         <file role="data" name="unit.php" />
-       </dir>
-
-       <dir name="fixtures">
-         <file role="data" name="sfYahooGeocoderResponsePhp.txt" />
-         <file role="data" name="sfYahooGeocoderResponseXml.xml" />
-       </dir>
-
-       <dir name="unit">
-	       <dir name="geocoder">
-           <file role="data" name="sfYahooGeocoderTest.php" />
-         </dir>
-
-         <dir name="response">
-           <file role="data" name="sfYahooGeocoderResponsePhpTest.php" />
-           <file role="data" name="sfYahooGeocoderResponseXmlTest.php" />
-         </dir>
-       </dir>
-     </dir>
-   </dir>
- </contents>
-
- <dependencies>
-  <required>
-   <php>
-    <min>5.1.0</min>
-   </php>
-   <pearinstaller>
-    <min>1.4.1</min>
-   </pearinstaller>
-  <package>
-    <name>symfony</name>
-    <channel>pear.symfony-project.com</channel>
-    <min>1.1.0</min>
-    <max>1.2.0</max>
-    <exclude>1.2.0</exclude>
-   </package> 
-  <package>
-    <name>symfony</name>
-    <channel>pear.symfony-project.com</channel>
-    <min>1.2.0</min>
-    <max>1.3.0</max>
-    <exclude>1.3.0</exclude>
-   </package>
-  </required>
- </dependencies>
-
- <phprelease>
- </phprelease>
+  <phprelease>
+  </phprelease>
 
   <changelog>
    	<release>
-	      <version>
-	        <release>1.1.0</release>
-	        <api>1.1.0</api>
-	      </version>
-	      <stability>
-	       <release>stable</release>
-	       <api>stable</api>
-	      </stability>
-	      <license uri="http://www.symfony-project.com/license">MIT license</license>
-	      <date>2009-08-10</date>
-	      <license>MIT</license>
-	      <notes>
-		      * hugo.hamon: Updated documentation (README file),
-		      * hugo.hamon: Fixed and improved old unit tests suites and added some new one for parser objects,
-		      * hugo.hamon: Added new sfYahooAdapterHttpMock object for unit tests,
-		      * hugo.hamon: Added new sfYahooAdapterHttp::getContent() method that returns the raw http response,
-		      * hugo.hamon: Added new sfYahooGeocoderResponseCollection class,
-		      * hugo.hamon: Added new sfYahooGeocoderParser, sfYahooGeocoderParserPhp and sfYahooGeocoderParserXml classes,
-		      * hugo.hamon: Added new sfYahooGeocoder::getRawResponse() method that returns the raw HTTP response,
-	        * hugo.hamon: The sfYahooGeocoder::geocode() method now returns a sfYahooGeocoderResponseCollection object, which contains one or more instance of sfYahooGeocoderResponsePhp or sfYahooGeocoderResponseXml.
-	      </notes>
-	    </release>
+	    <version>
+	      <release>1.1.0</release>
+	      <api>1.1.0</api>
+	    </version>
+	    <stability>
+	      <release>stable</release>
+	      <api>stable</api>
+	    </stability>
+	    <license uri="http://www.symfony-project.com/license">MIT license</license>
+	    <date>2009-08-11</date>
+	    <license>MIT</license>
+	    <notes>
+		    * hugo.hamon: Updated documentation (README file),
+		    * hugo.hamon: Fixed and improved old unit tests suites and added some new one for parser objects,
+		    * hugo.hamon: Added new sfYahooAdapterHttpMock object for unit tests,
+		    * hugo.hamon: Added new sfYahooAdapterHttp::getContent() method that returns the raw http response,
+		    * hugo.hamon: Added new sfYahooGeocoderResponseCollection class,
+		    * hugo.hamon: Added new sfYahooGeocoderParser, sfYahooGeocoderParserPhp and sfYahooGeocoderParserXml classes,
+		    * hugo.hamon: Added new sfYahooGeocoder::getRawResponse() method that returns the raw HTTP response,
+	      * hugo.hamon: The sfYahooGeocoder::geocode() method now returns a sfYahooGeocoderResponseCollection object, which contains one or more instance of sfYahooGeocoderResponsePhp or sfYahooGeocoderResponseXml.
+	    </notes>
+	  </release>
     <release>
       <version>
         <release>1.0.0</release>
