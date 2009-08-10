@@ -36,6 +36,13 @@ abstract class sfYahooAdapterHttp
   protected $parameters = array();
 
   /**
+   * The HTTP response content
+   *
+   * @return string
+   */
+  protected $content = '';
+
+  /**
    * Sets the query string parameters
    *
    * @var array $parameters The array of query string parameters
@@ -103,26 +110,26 @@ abstract class sfYahooAdapterHttp
   {
     try
     {
-      $content = $this->doSend(); 
+      $this->content = $this->doSend(); 
     }
     catch (Exception $e)
     {
       throw $e;
     }
 
-    return $this->hydrateResponse($content);
+    return $this->getResults($this->content);
   }
 
   /**
    * Creates and hydrates the response object from the returned string response
    *
    * @param string $content The HTTP response content
-   * @return sfYahooGeocoderResponse $response A derived object of class sfYahooGeocoderResponse
+   * @return sfYahooGeocoderResponseCollection $collection
    * @throws sfYahooGeocoderException
    */
-  public function hydrateResponse($content)
+  protected function getResults($content)
   {
-    $className = sprintf('sfYahooGeocoderResponse%s', ucfirst($this->getParameter('output')));
+    $className = sprintf('sfYahooGeocoderParser%s', ucfirst($this->getParameter('output')));
 
     if (!class_exists($className))
     {
@@ -130,9 +137,18 @@ abstract class sfYahooAdapterHttp
     }
 
     $response = new $className();
-    $response->setContent($content);
 
-    return $response;
+    return $response->parse($content);
+  }
+
+  /**
+   * Returns the HTTP response content
+   *
+   * @return string
+   */
+  public function getContent()
+  {
+    return $this->content;
   }
 
   /**
