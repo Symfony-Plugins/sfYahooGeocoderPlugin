@@ -5,9 +5,12 @@ require_once(dirname(__FILE__).'/../../../lib/exception/sfYahooGeocoderException
 require_once(dirname(__FILE__).'/../../../lib/response/sfYahooGeocoderResponse.class.php');
 require_once(dirname(__FILE__).'/../../../lib/response/sfYahooGeocoderResponsePhp.class.php');
 
-$t = new lime_test(29, new lime_output_color());
+$t = new lime_test(28, new lime_output_color());
 
-$xml = file_get_contents(dirname(__FILE__).'/../../fixtures/sfYahooGeocoderResponsePhp.txt');
+$content = file_get_contents(dirname(__FILE__).'/../../fixtures/sfYahooGeocoderResponsePhp.txt');
+
+$result = unserialize($content);
+$result = $result['ResultSet']['Result'];
 
 $t->diag('->hasCoordinates()');
 
@@ -23,12 +26,7 @@ $response->setLongitude(-2.83517);
 $t->is($response->hasCoordinates(), true, '->hasCoordinates() returns "true"');
 
 $response = new sfYahooGeocoderResponsePhp();
-
-$t->diag('->getContent()');
-
-$response->setContent($xml);
-
-$t->is($response->getContent(), $xml, '->getContent() returns the XML content');
+$response->fromArray($result);
 
 $t->diag('->getLatitude()');
 

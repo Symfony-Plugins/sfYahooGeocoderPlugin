@@ -9,7 +9,7 @@ try
 {
   $response = new sfYahooGeocoderResponseXml();
   
-  $t = new lime_test(25, new lime_output_color());
+  $t = new lime_test(24, new lime_output_color());
 }
 catch (Exception $e)
 {
@@ -19,12 +19,9 @@ catch (Exception $e)
 }
 
 $xml = file_get_contents(dirname(__FILE__).'/../../fixtures/sfYahooGeocoderResponseXml.xml');
+$xmlElement = new SimpleXMLElement($xml);
 
-$t->diag('->getContent()');
-
-$response->setContent($xml);
-
-$t->is($response->getContent(), $xml, '->getContent() returns the XML content');
+$response->fromSimpleXmlElement($xmlElement->Result);
 
 $t->diag('->getLatitude()');
 
