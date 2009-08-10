@@ -22,7 +22,6 @@
 abstract class sfYahooGeocoderResponse implements ArrayAccess
 {
   protected 
-    $content,
     $latitude,
     $longitude,
     $address,
@@ -31,13 +30,6 @@ abstract class sfYahooGeocoderResponse implements ArrayAccess
     $zip,
     $country,
     $precisionLevel;
-
-  /**
-   * Hydrates the object by parsing the HTTP response content
-   *
-   * @abstract
-   */
-  abstract protected function hydrate();
 
   /**
    * Checks if the offset exists in the array representation
@@ -90,28 +82,6 @@ abstract class sfYahooGeocoderResponse implements ArrayAccess
   public function offsetUnset($offset)
   {
     throw new sfYahooGeocoderException('Removing values via ArrayAccess is not authorized');
-  }
-
-  /**
-   * Sets the HTTP response content
-   *
-   * @param string $content The HTTP response content
-   */
-  public function setContent($content)
-  {
-    $this->content = $content;
-
-    $this->hydrate();
-  }
-
-  /**
-   * Returns the HTTP response content
-   *
-   * @return string
-   */
-  public function getContent()
-  {
-    return $this->content;
   }
 
   /**
@@ -305,7 +275,6 @@ abstract class sfYahooGeocoderResponse implements ArrayAccess
   protected final function _toArray()
   {
     return array(
-      'Content'        => $this->getContent(),
       'PrecisionLevel' => $this->getPrecisionLevel(),
       'Latitude'       => $this->getLatitude(),
       'Longitude'      => $this->getLongitude(),
