@@ -22,28 +22,25 @@
 class sfYahooGeocoderResponsePhp extends sfYahooGeocoderResponse
 {
   /**
-   * Hydrates the object from the http response content
+   * Hydrates the object from an array
    *
    * @throws sfYahooGeocoderException
    */
-  protected function hydrate()
+  public function fromArray(array $result)
   {
-    $result = unserialize($this->getContent());
-
-    if (!count($result) || !isset($result['ResultSet']['Result']))
+    if (array_key_exists('precision', $result))
     {
-      throw new sfYahooGeocoderException('No result found on the Yahoo! Geocoder service');
+      $this->setPrecisionLevel((string) $result['precision']);
     }
 
-    $result = $result['ResultSet']['Result'];
+    foreach ($result as $key => $value)
+    {
+      $method = sprintf('set%s', $key);
 
-    $this->setPrecisionLevel((string) $result['precision']);
-    $this->setLatitude((double) $result['Latitude']);
-    $this->setLongitude((double) $result['Longitude']);
-    $this->setAddress((string) $result['Address']);
-    $this->setCity((string) $result['City']);
-    $this->setState((string) $result['State']);
-    $this->setZip((string) $result['Zip']);
-    $this->setCountry((string) $result['Country']);
+      if (method_exists($this, $method) && is_callable(array($this, $method)))
+      {
+        call_user_func(array($this, $method), $value);
+      }
+    }
   }
 }
