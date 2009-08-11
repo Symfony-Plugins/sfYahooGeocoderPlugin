@@ -31,10 +31,8 @@ Installation
 
     ./symfony cc
 
-Usage
------
-
-### The sfYahooGeocoder API ###
+The sfYahooGeocoder API
+-----------------------
 
 The `sfYahooGeocoder` object is the main component of the plugin. It provides the API to call the Yahoo! Maps Geocoder webservice and obtain the geographical informations stored in a response object.
 
@@ -62,7 +60,8 @@ This object is composed of the following methods :
 
 All `setFooBar()` methods return the current object, which allows to chain methods as it will be explained later.
 
-### Usage examples ###
+Usage examples
+--------------
 
 The simpliest usage example is given below :
 
@@ -109,7 +108,8 @@ As you can see, the API allows to chain methods to gain in readability. A more c
     
 The `geocode()` method returns an object containing a collection of objects representing geographical data. Its API is described in the following part.
 
-### The `sfYahooGeocoderResponseCollection` API ###
+The `sfYahooGeocoderResponseCollection` API
+-------------------------------------------
 
 The `geocode()` method returns a `sfYahooGeocoderResponseCollection` object, which contains a collection of `sfYahooGeocoderResponsePhp` or `sfYahooGeocoderResponseXml` objects. Below is the API of this object.
 
@@ -123,7 +123,8 @@ The `geocode()` method returns a `sfYahooGeocoderResponseCollection` object, whi
   * `boolean clear()` : empties the collection,
   * `array getObjects()` : returns all the collection's objects in an array,
 
-### The `sfYahooGeocoderResponse` API ###
+The `sfYahooGeocoderResponse` API
+---------------------------------
 
 The API of derived `sfYahooGeocoderResponse` objects is described below. 
 
@@ -138,7 +139,8 @@ The API of derived `sfYahooGeocoderResponse` objects is described below.
   * `string getAddress()` : returns the address,
   * `string getPrecisionLevel()` : returns the precision level,
 
-### ArrayAccess implementation for response objects ###
+ArrayAccess implementation for response objects
+-----------------------------------------------
 
 The `sfYahooGeocoderResponse` class implements the `ArrayAccess` interface of the PHP SPL. So, every information accessible by an explicit accessor can be get via an array access interface :
 
@@ -268,29 +270,24 @@ The better way to achieve is to use the `sfYahooGeocoder` object into the `save(
       }
     }
 
+
 Unit testing
 ------------
 
-The plugin has been unit tested to provide a robust API :
+The plugin has been unit tested to provide a robust API. You can simply run the unit tests suites by following these steps :
+  
+  * Export the path to the symfony core libraries of your project into the SYMFONY global environment variable :
 
- * run the tests:
+    $ export SYMFONY=/path/to/project_root/lib/vendor/symfony/lib
 
-    $ php plugins/sfYahooGeocoderPlugin/test/unit/geocoder/sfYahooGeocoderTest.php
-    
-    $ php plugins/sfYahooGeocoderPlugin/test/unit/parser/sfYahooGeocoderParserPhpTest.php
-    
-    $ php plugins/sfYahooGeocoderPlugin/test/unit/parser/sfYahooGeocoderParserXmlTest.php
-    
-    $ php plugins/sfYahooGeocoderPlugin/test/unit/response/sfYahooGeocoderResponsePhpTest.php
-    
-    $ php plugins/sfYahooGeocoderPlugin/test/unit/response/sfYahooGeocoderResponseXmlTest.php
+  * Then, run the `prove.php` file, that launches the tests suite :
 
-    $ php plugins/sfYahooGeocoderPlugin/test/unit/response/sfYahooGeocoderResponseCollectionTest.php
+    $ cd /path/to/project_root
+    $ php plugins/sfYahooGeocoderPlugin/test/bin/prove.php
 
 TODO
 ----
 
-  * Add a task to run the unit test suites
   * Add a response cache manager to cache XML and PHP response in a storage space (disk, database, memory...)
 
 License and credits

@@ -22,13 +22,12 @@
  * @package sfYahooGeocoderPlugin
  * @subpackage lib.geocoder
  * @author Hugo Hamon <hugo.hamon@sensio.com>
- * @version 1.2.1 (stable)
+ * @version 1.3.0 (dev)
  *
  * @see http://www.symfony-project.org/plugins/sfYahooGeocoderPlugin
  */
 class sfYahooGeocoder
 {
-  const VERSION = '1.2.1';
   const YAHOO_OUTPUT_PHP = 'php';
   const YAHOO_OUTPUT_XML = 'xml';
 
