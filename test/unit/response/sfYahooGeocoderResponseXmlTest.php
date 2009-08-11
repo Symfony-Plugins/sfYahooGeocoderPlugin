@@ -21,7 +21,7 @@ catch (Exception $e)
 $xml = file_get_contents(dirname(__FILE__).'/../../fixtures/sfYahooGeocoderResponseXml.xml');
 $xmlElement = new SimpleXMLElement($xml);
 
-$response->fromSimpleXmlElement($xmlElement->Result);
+$response->hydrateFromSimpleXmlElement($xmlElement->Result);
 
 $t->diag('->getLatitude()');
 
