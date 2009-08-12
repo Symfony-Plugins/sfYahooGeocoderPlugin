@@ -8,15 +8,15 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
- 
+
 /**
- * The sfYahooGeocoder class is the main component of the plugin. It delivers a simple and lightweight API 
+ * The sfYahooGeocoder class is the main component of the plugin. It delivers a simple and lightweight API
  * to call the Yahoo! Geocoding webservice.
  *
- * The geocode() method will return a sfYahooGeocoderResponse instance if everything went fine or throw an 
+ * The geocode() method will return a sfYahooGeocoderResponse instance if everything went fine or throw an
  * exception otherwise.
  *
- * All setter methods returns $this, so method calls can be chained in order to make the API more readable and 
+ * All setter methods returns $this, so method calls can be chained in order to make the API more readable and
  * less verbose.
  *
  * @package sfYahooGeocoderPlugin
@@ -98,6 +98,27 @@ class sfYahooGeocoder
     }
 
     return $default;
+  }
+
+  /**
+   * Creates and hydrates the response object from the returned string response
+   *
+   * @param string $content The HTTP response content
+   * @return sfYahooGeocoderResponseCollection $collection
+   * @throws sfYahooGeocoderException
+   */
+  protected function getResults($content)
+  {
+    $className = sprintf('sfYahooGeocoderParser%s', ucfirst($this->getParameter('output')));
+
+    if (!class_exists($className))
+    {
+      throw new sfYahooGeocoderException(sprintf('Class "%s" does not exist !', $className));
+    }
+
+    $response = new $className();
+
+    return $response->parse($content);
   }
 
   /**
@@ -297,7 +318,7 @@ class sfYahooGeocoder
   /**
    * Processes the geocode process
    *
-   * @return sfYahooGeocoderResponse A derived object of class sfYahooGeocoderResponse
+   * @return sfYahooGeocoderResponseCollection
    * @throws sfYahooGeocderException
    */
   public function geocode()
@@ -311,11 +332,9 @@ class sfYahooGeocoder
 
       $this->httpAdapter->setParameters($this->parameters);
 
-      $collection = $this->httpAdapter->handle();
-      
-      $this->rawResponse = $this->httpAdapter->getContent();
+      $this->rawResponse = $this->httpAdapter->handle();
 
-      return $collection;
+      return $this->getResults($this->rawResponse);
     }
     catch (Exception $e)
     {

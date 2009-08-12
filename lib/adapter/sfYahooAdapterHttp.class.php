@@ -8,9 +8,9 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
- 
+
 /**
- * The sfYahooAdapterHttp class provides the base mechanisms to manage how the Yahoo! Geocoder webservice 
+ * The sfYahooAdapterHttp class provides the base mechanisms to manage how the Yahoo! Geocoder webservice
  * has to be called.
  *
  * @package sfYahooGeocoderPlugin
@@ -103,42 +103,21 @@ abstract class sfYahooAdapterHttp
   /**
    * Handles the http transport process
    *
-   * @return sfYahooGeocoderResponse
+   * @return string
    * @throws sfYahooGeocoderException
    */
   public function handle()
   {
     try
     {
-      $this->content = $this->doSend(); 
+      $this->content = $this->doSend();
     }
     catch (Exception $e)
     {
       throw $e;
     }
 
-    return $this->getResults($this->content);
-  }
-
-  /**
-   * Creates and hydrates the response object from the returned string response
-   *
-   * @param string $content The HTTP response content
-   * @return sfYahooGeocoderResponseCollection $collection
-   * @throws sfYahooGeocoderException
-   */
-  protected function getResults($content)
-  {
-    $className = sprintf('sfYahooGeocoderParser%s', ucfirst($this->getParameter('output')));
-
-    if (!class_exists($className))
-    {
-      throw new sfYahooGeocoderException(sprintf('Class "%s" does not exist !', $className));
-    }
-
-    $response = new $className();
-
-    return $response->parse($content);
+    return $this->getContent();
   }
 
   /**
