@@ -51,6 +51,13 @@ class sfYahooGeocoder
   protected $parameters = array();
 
   /**
+   * Wether or not cache is enabled
+   *
+   * @var boolean
+   */
+  protected $isCacheEnabled = false;
+
+  /**
    * Http adapter to support the HTTP transport
    *
    * @var sfYahooAdapterHttp
@@ -101,6 +108,40 @@ class sfYahooGeocoder
   }
 
   /**
+   * Returns wether or not the cache is enabled
+   *
+   * @return boolean
+   */
+  public function isCacheEnabled()
+  {
+    return $this->isCacheEnabled;
+  }
+
+  /**
+   * Enables the caching system
+   *
+   * @return sfYahooGeocoder $this
+   */
+  public function enableCache()
+  {
+    $this->isCacheEnabled = true;
+
+    return $this;
+  }
+
+  /**
+   * Disables the caching system
+   *
+   * @return sfYahooGeocoder $this
+   */
+  public function disableCache()
+  {
+    $this->isCacheEnabled = false;
+
+    return $this;
+  }
+
+  /**
    * Creates and hydrates the response object from the returned string response
    *
    * @param string $content The HTTP response content
@@ -116,9 +157,9 @@ class sfYahooGeocoder
       throw new sfYahooGeocoderException(sprintf('Class "%s" does not exist !', $className));
     }
 
-    $response = new $className();
+    $parser = new $className();
 
-    return $response->parse($content);
+    return $parser->parse($content);
   }
 
   /**
